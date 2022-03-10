@@ -1,0 +1,41 @@
+
+type Video {
+  id: ID!
+  title: String!
+  sinopsis: String!
+  duration: Integer!
+  file: String!
+  tipo: String!
+  episode: Integer!
+  season: Integer!
+  imageFilm: String!
+  genere: Genere
+}
+
+extend type Query {
+  # List all videos
+  videos: [Video!]! @all
+  
+  # List video by id
+  video(id: ID! @eq): Video @find
+
+  # List all movies or all movies
+  videoByType(tipo: String! @scope(name: "byTipo")) : [Video!] @all
+  
+  # List videos by title
+  videoByTitle(title: String! @scope(name: "byTitle")) : [Video!] @all
+
+  # List videos by genere
+  # videoByGenere(genere: Integer! @scope(name: "joinGenere")) : [Video!] @all
+}
+
+extend type Mutation {
+  # Create a video
+  # createVideo(title: String!, creationDate: String!, sinopsis: String!, duration: Integer!, file: String!, tipo: String!, episode: Integer!, season: Integer!, imageFilm: String!): Video @create
+  
+  # Update a video
+  updateVideo(id: ID!, title: String, sinopsis: String, file: String ): Video @update
+  
+  # Delete a video
+  deleteVideo(id: ID!): Video @delete
+}

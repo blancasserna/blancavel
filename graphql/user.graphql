@@ -1,0 +1,28 @@
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  surname: String!
+  password: String!
+}
+
+extend type Query {
+  # List user by id
+  user(id: ID! @eq): User @find
+  #  List all users
+  users: [User!]! @all
+}
+
+extend type Mutation {
+  # Create user
+  createUser(name: String!, email: String!, password: String!): User @create
+  # Update user
+  updateUser(id: ID!, name: String, email: String, password: String): User @update
+  # Delete user
+  deleteUser(id: ID!): User @delete
+}
+
+
+#  Login
+

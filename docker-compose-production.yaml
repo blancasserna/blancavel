@@ -1,0 +1,41 @@
+services:
+  laravel:
+    image: gbimage
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx_img
+    ports:
+      - 80:80
+    configs:
+      - source: configuracio_nginx
+        target: /etc/nginx/conf.d/default.conf 
+    depends_on:
+      - laravel
+
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    ports:
+        - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+        - 'sailmysql:/var/lib/mysql'
+
+configs:
+  configuracio_nginx:
+    file: ./nginx/conf
+volumes:
+    sailmysql:
+        driver: local
+
+  
+
+    
+

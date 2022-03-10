@@ -1,0 +1,21 @@
+
+type Product {
+  id: ID!
+  name: String!
+  desc: String
+  price: String
+  category: Category
+}
+
+type Category {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  product(id: ID! @eq): Product @find
+  products: [Product!]! @all
+}
+type Mutation {
+  createProduct(name: String!, desc: String!, price: String!): Product @create
+}
